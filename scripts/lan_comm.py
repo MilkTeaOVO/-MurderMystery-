@@ -235,7 +235,7 @@ def example_server() -> TcpServer:
     def on_message(sock: socket.socket, data: bytes) -> None:
         print(f'收到消息: {data.decode("utf-8", errors="ignore")}')
         try:
-            sock.sendall(b'已收到')
+            sock.sendall('已收到'.encode('utf-8'))
         except OSError:
             pass
 
