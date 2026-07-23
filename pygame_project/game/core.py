@@ -11,13 +11,22 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.scene = HomeScene(self)
+        self.scene_stack = []
         self.status_text = '请选择你的角色开始配对'
 
     def set_status(self, text):
         self.status_text = text
 
-    def set_scene(self, scene):
+    def set_scene(self, scene, push_current=True):
+        if push_current and self.scene is not None:
+            self.scene_stack.append(self.scene)
         self.scene = scene
+
+    def go_back(self):
+        if self.scene_stack:
+            self.scene = self.scene_stack.pop()
+        else:
+            self.scene = HomeScene(self)
 
     def handle_events(self):
         for event in pygame.event.get():
